@@ -49,6 +49,15 @@ REM Rename and move files if needed
 rename "%folder%\autostart_update.bat" "updatescript_update.bat"
 rename "%folder%\autostart_scheduled.bat" "updatescript.bat"
 
+REM Download uninstall.bat
+set "uninstall_url=https://raw.githubusercontent.com/arbs09/update-script/master/uninstall.bat"
+set "uninstall_file=%folder%\uninstall.bat"
+
+curl -o "%uninstall_file%" %uninstall_url%
+
+REM Log the uninstall.bat download
+echo [%date% %time%] uninstall.bat downloaded. >> "%folder%\installer_log.txt"
+
 REM Log the installation completion
 echo [%date% %time%] Installation completed. >> "%folder%\logs\installer_log.txt"
 
