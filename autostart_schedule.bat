@@ -18,7 +18,7 @@ if "%schedule%"=="day" (
 )
 
 REM Log autostart_scheduled.bat run
-echo [%date% %time%] autostart_scheduled.bat run >> "%folder%\logs\autostart_scheduled_log.txt"
+echo [%date% %time%] autostart_scheduled.bat run >> "%userprofile%\updatescript from arbs09\logs\autostart_scheduled_log.txt"
 
 REM Loop to check schedule and run updatescript.bat at specified times
 :loop
@@ -56,11 +56,11 @@ goto :loop
 
 :run_updatescript
 REM Run updatescript.bat in the background
-start "" /min "%folder%\updatescript.bat"
+start "" /min "%userprofile%\updatescript from arbs09\logs\updatescript.bat"
 goto :eof
 
 :end
 REM Log end of autostart_scheduled.bat run
-echo [%date% %time%] autostart_scheduled.bat run ended >> "%folder%\logs\autostart_scheduled_log.txt"
+echo [%date% %time%] autostart_scheduled.bat run ended >> "%userprofile%\updatescript from arbs09\logs\autostart_scheduled_log.txt"
 
 endlocal

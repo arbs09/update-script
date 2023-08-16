@@ -16,6 +16,6 @@ curl -o "%folder%\sync.bat" "%github_sync_url%"
 curl -o "%folder%\updatescript.bat" "%github_updatescript_url%"
 
 REM Log completion message
-echo [%date% %time%] Sync is complete! >> "%folder%\logs\sync_log.txt"
+echo [%date% %time%] Sync is complete! >> "%userprofile%\updatescript from arbs09\logs\sync_log.txt"
 
 endlocal
