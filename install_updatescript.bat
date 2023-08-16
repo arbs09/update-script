@@ -46,8 +46,8 @@ if "%schedule%" neq "manual" (
 )
 
 REM Rename and move files if needed
-rename "%folder%\autostart_update.bat" "updatescript_update.bat"
-rename "%folder%\autostart_scheduled.bat" "updatescript.bat"
+rename "%folder%\autostart_update.bat" "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\updatescript_update.bat"
+rename "%folder%\autostart_scheduled.bat" "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\updatescript.bat"
 
 REM Download uninstall.bat
 set "uninstall_url=https://raw.githubusercontent.com/arbs09/update-script/master/uninstall.bat"
