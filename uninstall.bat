@@ -10,6 +10,11 @@ if exist "%folder%\logs" (
 )
 
 REM Delete autostart files
+if exist "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\updatescript_update.bat" (
+    del "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\updatescript_update.bat"
+)
+
+REM Delete autostart files
 if exist "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\updatescript.bat" (
     del "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\updatescript.bat"
 )

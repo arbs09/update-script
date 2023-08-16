@@ -56,7 +56,7 @@ set "uninstall_file=%folder%\uninstall.bat"
 curl -o "%uninstall_file%" %uninstall_url%
 
 REM Log the uninstall.bat download
-echo [%date% %time%] uninstall.bat downloaded. >> "%folder%\installer_log.txt"
+echo [%date% %time%] uninstall.bat downloaded. >> "%folder%\logs\installer_log.txt"
 
 REM Log the installation completion
 echo [%date% %time%] Installation completed. >> "%folder%\logs\installer_log.txt"
