@@ -1,0 +1,1 @@
+cmd /k "winget upgrade --all --include-unknown"
