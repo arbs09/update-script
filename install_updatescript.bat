@@ -1,54 +1,61 @@
 @echo off
 setlocal
 
-REM Set the folder path
+REM Create the folder in the user's home directory
 set "folder=%userprofile%\updatescript from arbs09"
-
-REM Create the folder if it doesn't exist
 mkdir "%folder%"
 mkdir "%folder%\logs"
 
-REM Log installation start
-echo [%date% %time%] Installation started >> "%folder%\logs\install_log.txt"
+REM Log the installation start
+echo [%date% %time%] Installation started. >> "%folder%\logs\installer_log.txt"
 
-REM Download updatescript.bat and sync.bat from GitHub
-set "github_updatescript_url=https://raw.githubusercontent.com/arbs09/update-script/master/updatescript.bat"
-set "github_sync_url=https://raw.githubusercontent.com/arbs09/update-script/master/sync.bat"
-curl -o "%folder%\updatescript.bat" "%github_updatescript_url%"
-curl -o "%folder%\sync.bat" "%github_sync_url%"
+REM Download updatescript.bat
+set "updatescript_url=https://raw.githubusercontent.com/arbs09/update-script/master/updatescript.bat"
+curl -o "%folder%\updatescript.bat" %updatescript_url%
+REM Log the updatescript.bat download
+echo [%date% %time%] updatescript.bat downloaded. >> "%folder%\logs\installer_log.txt"
 
-REM Log download of updatescript.bat and sync.bat
-echo [%date% %time%] Downloaded updatescript.bat from GitHub >> "%folder%\logs\install_log.txt"
-echo [%date% %time%] Downloaded sync.bat from GitHub >> "%folder%\logs\install_log.txt"
+REM Download sync.bat
+set "sync_url=https://raw.githubusercontent.com/arbs09/update-script/master/sync.bat"
+curl -o "%folder%\sync.bat" %sync_url%
+REM Log the sync.bat download
+echo [%date% %time%] sync.bat downloaded. >> "%folder%\logs\installer_log.txt"
 
-REM Popup to choose autostart schedule
-set /p "schedule=Choose autostart schedule (day/week/14days/month/2months): "
+REM Create autostart.config and write the chosen schedule
+set /p "schedule=Choose autostart schedule (day/week/14days/month/2months/manual): "
 echo %schedule% > "%folder%\autostart.config"
 
-REM Log autostart schedule choice
-echo [%date% %time%] Autostart schedule choice: %schedule% >> "%folder%\logs\install_log.txt"
+REM Log the chosen schedule
+echo [%date% %time%] Chosen autostart schedule: %schedule% >> "%folder%\logs\installer_log.txt"
 
-REM Create autostart_scheduled.bat and autostart_update.bat
-set "local_autostart_scheduled_path=%folder%\autostart_scheduled.bat"
-set "local_autostart_update_path=%folder%\autostart_update.bat"
-set "github_autostart_scheduled_url=https://raw.githubusercontent.com/arbs09/update-script/master/autostart_scheduled.bat"
-set "github_autostart_update_url=https://raw.githubusercontent.com/arbs09/update-script/master/autostart_update.bat"
-curl -o "%local_autostart_scheduled_path%" "%github_autostart_scheduled_url%"
-curl -o "%local_autostart_update_path%" "%github_autostart_update_url%"
+REM Create autostart_update.bat
+set "autostart_update_url=https://raw.githubusercontent.com/arbs09/update-script/master/autostart_update.bat"
+curl -o "%folder%\autostart_update.bat" %autostart_update_url%
+REM Log the autostart_update.bat download
+echo [%date% %time%] autostart_update.bat downloaded. >> "%folder%\logs\installer_log.txt"
 
-REM Rename updatescript_update.bat to updatescript.bat and move autostart scripts
-rename "%folder%\updatescript_update.bat" "updatescript.bat"
-move "%local_autostart_scheduled_path%" "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
-move "%local_autostart_update_path%" "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
+REM Create autostart_scheduled.bat (if schedule is not "manual")
+if "%schedule%" neq "manual" (
+    set "autostart_scheduled_url=https://raw.githubusercontent.com/arbs09/update-script/master/autostart_scheduled.bat"
+    curl -o "%folder%\autostart_scheduled.bat" %autostart_scheduled_url%
+    REM Log the autostart_scheduled.bat download
+    echo [%date% %time%] autostart_scheduled.bat downloaded. >> "%folder%\logs\installer_log.txt"
+) else (
+    REM Log the manual option
+    echo [%date% %time%] Manual option chosen. autostart_scheduled.bat not downloaded. >> "%folder%\logs\installer_log.txt"
+)
 
-REM Log autostart script movements
-echo [%date% %time%] Autostart scripts moved to Startup folder >> "%folder%\logs\install_log.txt"
+REM Rename and move files if needed
+rename "%folder%\autostart_update.bat" "updatescript_update.bat"
+rename "%folder%\autostart_scheduled.bat" "updatescript.bat"
 
-REM Log installation completion
-echo [%date% %time%] Installation is complete! >> "%folder%\logs\install_log.txt"
+REM Log the installation completion
+echo [%date% %time%] Installation completed. >> "%folder%\logs\installer_log.txt"
 
-REM Display completion message to the user
+REM Display completion message
 echo Installation is complete.
-pause
+
+REM Wait for user to press Enter before exiting
+pause > nul
 
 endlocal
